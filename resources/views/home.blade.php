@@ -24,6 +24,7 @@
 
     <h1> The vinyl Shop</h1>
 <p>Welcome to the website of the Vinyl Shop, a large online store with lots of (classic) vinyl records</p>
+
 @endsection
 </body>
 </html>

@@ -13,6 +13,9 @@
 
 
 Route::view('/', 'home');
+Route::get('shop', 'ShopController@index');
+Route::get('shop_alt', 'ShopController@index_alt');
+Route::get('shop/{id}', 'ShopController@show');
 Route::redirect('admin', 'records');
 
 

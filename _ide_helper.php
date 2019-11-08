@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 6.0.3 on 2019-10-04 07:27:22.
+ * Generated for Laravel 6.0.3 on 2019-10-18 11:05:37.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -14587,6 +14587,56 @@ namespace Illuminate\Support {
  
 }
 
+namespace Facades\App\Helpers { 
+
+    /**
+     * 
+     *
+     * @see \App\Helpers\Json
+     */ 
+    class Json {
+        
+        /**
+         * Dump data as json (add ?json to URL)
+         *
+         * @param mixed $data string, array, associative array object
+         * @param bool $onlyInDebugMode runs only in debug mode: default = true
+         * @version 1.0
+         * @static 
+         */ 
+        public static function dump($data = null, $onlyInDebugMode = true)
+        {
+                        /** @var \App\Helpers\Json $instance */
+                        return $instance->dump($data, $onlyInDebugMode);
+        }
+         
+    }
+
+    /**
+     * 
+     *
+     * @see \App\Helpers\Mask
+     */ 
+    class Mask {
+        
+        /**
+         * Obfuscate mail address
+         *
+         * @param string $email
+         * @param string $name
+         * @return \App\Helpers\HtmlString 
+         * @static 
+         */ 
+        public static function email($email, $name = null)
+        {
+                        /** @var \App\Helpers\Mask $instance */
+                        return $instance->email($email, $name);
+        }
+         
+    }
+ 
+}
+
 namespace Facade\Ignition\Facades { 
 
     /**
@@ -17607,6 +17657,10 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
 
     class View extends \Illuminate\Support\Facades\View {}
+
+    class Json extends \Facades\App\Helpers\Json {}
+
+    class Mask extends \Facades\App\Helpers\Mask {}
 
     class Flare extends \Facade\Ignition\Facades\Flare {}
  
