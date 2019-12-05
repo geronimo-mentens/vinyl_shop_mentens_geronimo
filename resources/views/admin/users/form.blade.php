@@ -6,9 +6,9 @@
            placeholder="Name"
            minlength="3"
            required
-           value="{{ old('name', $genre->name) }}">
+           value="{{ old('name', $user->name) }}">
     @error('name')
     <div class="invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
-<button type="submit" class="btn btn-success">Save genre</button><button type="submit" class="btn btn-success">Save genre</button>
+<button type="submit" class="btn btn-success">Save user</button>

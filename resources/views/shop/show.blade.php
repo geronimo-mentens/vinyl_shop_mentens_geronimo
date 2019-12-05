@@ -34,6 +34,20 @@
 
 @section('main')
     <h1>{{ $record->title }}</h1>
+    @include('shared.alert')
+    @if (auth()->user() && auth()->user()->admin)
+        <div class="alert alert-primary">
+            <a href="/admin/records/create" class="btn btn-success">
+                <i class="fas fa-plus-circle mr-1"></i>New record
+            </a>
+            <a href="/admin/records/{{ $record->id }}/edit" class="btn btn-primary">
+                <i class="fas fa-edit mr-1"></i>Edit record
+            </a>
+            <a href="#!" class="btn btn-danger" id="deleteRecord">
+                <i class="fas fa-trash mr-1"></i>Delete record
+            </a>
+        </div>
+    @endif
     <div class="row">
         <div class="col-sm-4 text-center">
             <img class="img-thumbnail" id="cover" src="/assets/vinyl.png" data-src="{{ $record->cover }}"

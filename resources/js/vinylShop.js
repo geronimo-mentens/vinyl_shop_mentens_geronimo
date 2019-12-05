@@ -18,6 +18,12 @@ $(function(){
     });
     $('nav i.fas').addClass('fa-fw mr-1');
     $('[data-toggle="tooltip"]').tooltip({
+        selector: '[data-toggle="tooltip"]',
         'html' : true,
     });
+});
+Noty.overrideDefaults({
+    layout: 'topRight',
+    theme: 'bootstrap-v4',
+    timeout: 3000
 });

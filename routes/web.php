@@ -27,9 +27,13 @@ Route::view('contact-us','contact');
 Auth::routes();
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::redirect('/', 'records');
+    Route::get('genres/qryGenres', 'Admin\GenreController@qyrGenres');
     Route::resource('genres', 'Admin\GenreController');
+    Route::resource('records', 'Admin\RecordController');
     Route::get('records', 'Admin\RecordController@index');
-});
+    Route::get('users/qyrUsers', 'Admin\UserController@qyrUsers');
+    Route::resource('users', 'Admin\UserController');
+    });
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::view('/', 'home');
 
@@ -44,3 +48,6 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+

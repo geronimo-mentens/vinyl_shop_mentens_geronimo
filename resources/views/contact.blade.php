@@ -55,9 +55,9 @@
                     required
             >
                 <option  class="form-control" selected disabled value="">Select a contact</option>
-                <option  value="info@thevinylshop.com">info@thevinylshop.com</option>
-                <option value="billing@thevinylshop.com">billing@thevinylshop.com</option>
-                <option value="support@thevinylshop.com">support@thevinylshop.com</option>
+                <option  value="info@thevinylshop.com">info</option>
+                <option value="billing@thevinylshop.com">billing</option>
+                <option value="support@thevinylshop.com">support</option>
             </select>
             <div class="invalid-feedback">{{ $errors->first('contact') }}</div>
         </div>
