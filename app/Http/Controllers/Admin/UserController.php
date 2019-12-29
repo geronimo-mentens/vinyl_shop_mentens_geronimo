@@ -6,6 +6,8 @@ use Json;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Symfony\Component\Console\Input\Input;
+
 
 class UserController extends Controller
 {
@@ -18,26 +20,144 @@ class UserController extends Controller
     {
         $user_id = $request->input('id') ?? '%';
         $user_title = '%' . $request->input('user') . '%';
-        $users = User::orderBy('name')
-            ->where(function ($query) use ($user_title, $user_id) {
-                $query->where('name', 'like', $user_title)
-                      ->where('id', 'like', $user_id);
-            })
-            ->orWhere(function ($query) use ($user_title, $user_id) {
-                $query->where('email', 'like', $user_title)
-                      ->where('id', 'like', $user_id);
-            })
-                ->paginate(9)
-                ->appends(['users'=> $request->input('user'), 'id' => $request->input('id')]);
-if ( $user_id=2) {
+       $test =   $request->sortby;
 
-    $user = User::orderBy('name','desc')// short version of orderBy('name', 'asc')
-    ->get();
-    $result = compact('user', 'users');
+
+       switch ($test){
+
+           case'' :
+
+
+               $users = User::orderBy('name')
+                   ->where(function ($query) use ($user_title, $user_id) {
+                       $query->where('name', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->orWhere(function ($query) use ($user_title, $user_id) {
+                       $query->where('email', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+
+
+                   ->paginate(9)
+
+                   ->appends(['users'=> $request->input('user'), 'id' => $request->input('id')]);
+
+           break;
+           case 1:
+
+
+               $users = User::orderBy('name')
+                   ->where(function ($query) use ($user_title, $user_id) {
+                       $query->where('name', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->orWhere(function ($query) use ($user_title, $user_id) {
+                       $query->where('email', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->paginate(9)
+                   ->appends(['users'=> $request->input('user'), 'id' => $request->input('id')]);
+
+
+               break;
+           case 2:
+
+
+               $users = User::orderBy('name','desc')
+                   ->where(function ($query) use ($user_title, $user_id) {
+                       $query->where('name', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->orWhere(function ($query) use ($user_title, $user_id) {
+                       $query->where('email', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->paginate(9)
+                   ->appends(['users'=> $request->input('user'), 'id' => $request->input('id')]);
+
+
+               break;
+           case 3:
+
+               $users = User::orderBy('email')
+                   ->where(function ($query) use ($user_title, $user_id) {
+                       $query->where('name', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->orWhere(function ($query) use ($user_title, $user_id) {
+                       $query->where('email', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->paginate(9)
+                   ->appends(['users'=> $request->input('user'), 'id' => $request->input('id')]);
+
+
+
+               break;
+           case 4:
+
+
+               $users = User::orderBy('email','desc')
+                   ->where(function ($query) use ($user_title, $user_id) {
+                       $query->where('name', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->orWhere(function ($query) use ($user_title, $user_id) {
+                       $query->where('email', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->paginate(9)
+                   ->appends(['users'=> $request->input('user'), 'id' => $request->input('id')]);
+
+
+               break;
+           case 5:
+
+               $users = User::orderBy('active')
+                   ->where(function ($query) use ($user_title, $user_id) {
+                       $query->where('name', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->orWhere(function ($query) use ($user_title, $user_id) {
+                       $query->where('email', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+                   ->paginate(9)
+                   ->appends(['users'=> $request->input('user'), 'id' => $request->input('id')]);
+
+
+
+               break;
+           case 6:
+
+               $users = User::orderBy('admin')
+                   ->where(function ($query) use ($user_title, $user_id) {
+                       $query->where('name', 'like', $user_title)
+                           ->where('id', 'like', $user_id)
+                       ->where('admin', 'like', '1');
+                          })
+                   ->orWhere(function ($query) use ($user_title, $user_id) {
+                       $query->where('email', 'like', $user_title)
+                           ->where('id', 'like', $user_id);
+                   })
+
+                   ->paginate(9)
+                   ->appends(['users'=> $request->input('user'), 'id' => $request->input('id')]);
+
+
+
+               break;
+       }
+
+
+
+
+        $result = compact( 'users');
 
     Json::dump($result);
     return view('admin.users.index', $result);
-}
+
 
     }
 
@@ -59,17 +179,6 @@ if ( $user_id=2) {
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name' => 'required|min:3|unique:users,name'
-        ]);
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->save();
-        return response()->json([
-            'type' => 'success',
-            'text' => "The genre <b>$user->name</b> has been added"
-        ]);
     }
 
     /**
@@ -91,7 +200,10 @@ if ( $user_id=2) {
      */
     public function edit(User $user)
     {
-        $result = compact('user');
+        $getal = User::orderby('admin');
+
+
+        $result = compact('user', 'getal');
         Json::dump($result);
         return view('admin.users.edit', $result);
     }
@@ -106,11 +218,30 @@ if ( $user_id=2) {
     public function update(Request $request, User $user)
     {
         $this->validate($request,[
-            'name' => 'required|min:3|unique:users,name,' .$user->id
+            'name' => 'required|unique:users,name,' .$user->id,
+            'email' => 'required|email|unique:users'
         ]);
+
+
+
+
         $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->has('admin')) {
+            $user->admin = 1;
+        } else {
+            $user->admin = 0;
+        }
+
+        if ($request->has('active')) {
+            $user->active = 1;
+        } else {
+            $user->active = 0;
+        }
+
         $user->save();
-        session()->flash('success', 'The user has been updated');
+        session()->flash('success', "The  <b>$user->name</b> has been updated");
         return redirect('admin/users');
     }
 
@@ -122,18 +253,31 @@ if ( $user_id=2) {
      */
     public function destroy(User $user)
     {
+        $test = $user->admin;
+        if ($test==1){
 
-        $user->delete();
-        session()->flash('success', "The genre <b>$user->name</b> has been deleted");
-        return redirect('admin/users');
+            $user->save();
+            session()->flash('danger', "The user <b>$user->name</b> can not been deleted");
+
+
+            return redirect('admin/users');
+        }
+        else{
+
+            $user->delete();
+
+            session()->flash('success', "The user <b>$user->name</b> has been deleted");
+            return redirect('admin/users');
+        }
+
     }
     public function qyrUsers()
     {
         $users = User::orderBy('name')
 
-            ->paginate(9);
-        $result = compact('users');
-        Json::dump($result);
-        return view('admin.users.index', $result);
+            ->get();
+
+;
+        return $users;
     }
 }

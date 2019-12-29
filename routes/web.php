@@ -31,7 +31,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::resource('genres', 'Admin\GenreController');
     Route::resource('records', 'Admin\RecordController');
     Route::get('records', 'Admin\RecordController@index');
-    Route::get('users/qyrUsers', 'Admin\UserController@qyrUsers');
+    Route::get('users', 'Admin\UserController@index');
     Route::resource('users', 'Admin\UserController');
     });
 // Route::get('/home', 'HomeController@index')->name('home');

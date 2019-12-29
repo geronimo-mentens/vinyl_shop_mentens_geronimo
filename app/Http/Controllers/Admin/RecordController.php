@@ -101,5 +101,13 @@ class RecordController extends Controller
         Json::dump($result);
         return view('admin.records.edit', $result);
     }
+    public function destroy(Record $record)
+    {
+        $record->delete();
+        return response()->json([
+            'type' => 'success',
+            'text' => "Record has been deleted"
+        ]);
+    }
 }
 

@@ -27,6 +27,52 @@
             $('#cover').attr('src', $('#cover').data('src'));
             // Get tracks from MusicBrainz API
         });
+        @if (auth()->user() && auth()->user()->admin)
+        $(function () {
+            $('#deleteRecord').click(function () {
+                let id = '{{ $record->id }}';
+                console.log(`delete record ${id}`);
+                // Show Noty
+                let modal = new Noty({
+                    timeout: false,
+                    layout: 'center',
+                    modal: true,
+                    type: 'warning',
+                    text: '<p>Delete the record <b>{{ $record->title }}</b>?</p>',
+                    buttons: [
+                        Noty.button('Delete record', 'btn btn-danger', function () {
+                            // Delete record and close modal
+                            let pars = {
+                                '_token': '{{ csrf_token() }}',
+                                '_method': 'delete'
+                            };
+                            $.post(`/admin/records/${id}`, pars, 'json')
+                                .done(function (data) {
+                                    console.log('data', data);
+                                    // Show toast
+                                    new Noty({
+                                        type: data.type,
+                                        text: data.text
+                                    }).show();
+                                    // After 2 seconds, redirect to the public master page
+                                    setTimeout(function () {
+                                        $(location).attr('href', '/shop'); // jQuery
+                                        // window.location = '/shop'; // JavaScript
+                                    }, 2000);
+                                })
+                                .fail(function (e) {
+                                    console.log('error', e);
+                                });
+                            modal.close();
+                        }),
+                        Noty.button('Cancel', 'btn btn-secondary ml-2', function () {
+                            modal.close();
+                        })
+                    ]
+                }).show();
+            })
+        });
+        @endif
     </script>
 @endsection
 
